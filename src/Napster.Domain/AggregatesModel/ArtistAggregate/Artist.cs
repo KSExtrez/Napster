@@ -1,17 +1,9 @@
-﻿namespace Napster.Domain.AggregatesModel.ArtistAggregate
+﻿using Napster.Domain.SeedWork;
+
+namespace Napster.Domain.AggregatesModel.ArtistAggregate
 {
-    public sealed class Artist
+    public sealed class Artist : Entity
     {
-        /// <summary>
-        /// Gets an artist unique id.
-        /// </summary>
-        public string Id { get; init; }
-
-        /// <summary>
-        /// Gets an artist name.
-        /// </summary>
-        public string Name { get; init; }
-
         /// <summary>
         /// Gets an artist image url.
         /// </summary>
@@ -30,9 +22,8 @@
         /// <param name="imgUrl">Artist image url.</param>
         /// <param name="genres">Artist genres.</param>
         public Artist(string id, string name, Uri imgUrl, IEnumerable<string> genreIds)
+            : base(id, name)
         {
-            Id = id;
-            Name = name;
             ImgUrl = imgUrl;
             GenreIds = genreIds;
         }

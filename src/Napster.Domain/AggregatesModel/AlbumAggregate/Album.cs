@@ -1,31 +1,14 @@
-﻿namespace Napster.Domain.AggregatesModel.AlbumAggregate
+﻿using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
+using Napster.Domain.SeedWork;
+
+namespace Napster.Domain.AggregatesModel.AlbumAggregate
 {
-    public sealed class Album
+    public sealed class Album : Entity
     {
         /// <summary>
-        /// Gets an Album unique id.
+        /// Gets an album information.
         /// </summary>
-        public string Id { get; init; }
-
-        /// <summary>
-        /// Gets an Album name.
-        /// </summary>
-        public string Name { get; init; }
-
-        /// <summary>
-        /// Gets an Album iamge url.
-        /// </summary>
-        public Uri ImgUrl { get; init; }
-
-        /// <summary>
-        /// Gets an Album release date.
-        /// </summary>
-        public DateOnly ReleaseDate { get; init; }
-
-        /// <summary>
-        /// Gets an Album label.
-        /// </summary>
-        public string Label { get; init; }
+        public AlbumInfo AlbumInfo { get; init; }
 
         /// <summary>
         /// Gets an Album tracks.
@@ -47,13 +30,10 @@
         /// <param name="label">Album label.</param>
         /// <param name="tracks">Album tracks.</param>
         /// <param name="genres">Album related genres.</param>
-        public Album(string id, string name, Uri imgUrl, DateOnly releaseDate, string label, List<Track> tracks, List<string> genreIds)
+        public Album(string id, string name, AlbumInfo albumInfo, List<Track> tracks, List<string> genreIds)
+            : base(id, name)
         {
-            Id = id;
-            Name = name;
-            ImgUrl = imgUrl;
-            ReleaseDate = releaseDate;
-            Label = label;
+            AlbumInfo = albumInfo;
             Tracks = tracks;
             GenreIds = genreIds;
         }

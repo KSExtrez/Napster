@@ -1,17 +1,9 @@
-﻿namespace Napster.Domain.AggregatesModel.GenreAggregate
+﻿using Napster.Domain.SeedWork;
+
+namespace Napster.Domain.AggregatesModel.GenreAggregate
 {
-    public sealed class Genre
+    public sealed class Genre : Entity
     {
-        /// <summary>
-        /// Gets a genre unique id.
-        /// </summary>
-        public string Id { get; init; }
-
-        /// <summary>
-        /// Gets a genre name.
-        /// </summary>
-        public string Name { get; init; }
-
         /// <summary>
         /// Gets a genre description.
         /// </summary>
@@ -30,9 +22,8 @@
         /// <param name="description">Genre description.</param>
         /// <param name="parentGenreId">Genre parend id.</param>
         public Genre(string id, string name, string? description, string parentGenreId)
+            : base(id, name)
         {
-            Id = id;
-            Name = name;
             Description = description;
             ParentGenreId = parentGenreId;
         }

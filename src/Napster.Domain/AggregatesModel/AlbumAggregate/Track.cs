@@ -1,31 +1,19 @@
-﻿namespace Napster.Domain.AggregatesModel.AlbumAggregate
+﻿using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
+using Napster.Domain.SeedWork;
+
+namespace Napster.Domain.AggregatesModel.AlbumAggregate
 {
-    public sealed class Track
+    public sealed class Track : Entity
     {
-        /// <summary>
-        /// Gets Track unique id.
-        /// </summary>
-        public string Id { get; init; }
-
-        /// <summary>
-        /// Gets Track name.
-        /// </summary>
-        public string Name { get; init; }
-
         /// <summary>
         /// Gets parent album id.
         /// </summary>
         public string AlbumId { get; init; }
 
         /// <summary>
-        /// Gets a preview url.
+        /// Gets a track information.
         /// </summary>
-        public Uri Preview { get; init; }
-
-        /// <summary>
-        /// Gets track duration.
-        /// </summary>
-        public TimeOnly Duration { get; init; }
+        public TrackInfo TrackInfo { get; init; }
 
         /// <summary>
         /// Gets a parent artist.
@@ -41,13 +29,11 @@
         /// <param name="preview">Track preview.</param>
         /// <param name="duration">Track duration.</param>
         /// <param name="artist">Track parent artist.</param>
-        public Track(string id, string name, string albumId, Uri preview, TimeOnly duration, string artistId)
+        public Track(string id, string name, string albumId, TrackInfo trackInfo, string artistId)
+            : base(id, name)
         {
-            Id = id;
-            Name = name;
             AlbumId = albumId;
-            Preview = preview;
-            Duration = duration;
+            TrackInfo = trackInfo;
             ArtistId = artistId;
         }
     }
