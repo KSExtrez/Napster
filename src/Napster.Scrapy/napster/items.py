@@ -9,9 +9,7 @@ class Genre(scrapy.Item):
     id = scrapy.Field()
     name = scrapy.Field()
     description = scrapy.Field()
-    artists = scrapy.Field()
-    sub_genres = scrapy.Field()
-    parent_genres = scrapy.Field()
+    parent_genre = scrapy.Field()
 
 
 class Artist(scrapy.Item):

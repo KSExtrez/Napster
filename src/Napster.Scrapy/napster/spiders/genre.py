@@ -25,15 +25,10 @@ class PruebaSpider(scrapy.Spider):
         # gets the last name (current name)
         genre['name'] = response.css(
             '#page-name::text').get().replace(' Music', '')
-
         genre['description'] = response.css(
             'div.genre-banner-text').css('div.genre-blurb::text').get()
-        genre['sub_genres'] = response.css(
-            'ul.genre-list').css('a.tag-button::text').getall()
-        genre['artists'] = response.css(
-            'div.artist-list').css('div.name>a.artist-link::text').getall()
         if len(ids) > 1:
-            genre['parent_genres'] = ids[-2]
+            genre['parent_genre'] = ids[-2]
         else:
-            genre['parent_genres'] = 'g.0'
+            genre['parent_genre'] = 'g.0'
         return genre
