@@ -1,6 +1,6 @@
 import scrapy
 
-from napster.items import Album
+from napster.items import Album, Track
 
 
 class AlbumSpider(scrapy.Spider):
@@ -22,4 +22,18 @@ class AlbumSpider(scrapy.Spider):
         album['label'] = response.css('#music-label::text').get()
         album['songs'] = response.css(
             '.track-list>li::attr(track_id)').getall()
+        tracks = []
+        traks_li = response.css(
+            '.track-list>li')
+        for item in traks_li:
+            track = Track()
+            track['id'] = item.attrib['track_id']
+            track['name'] = item.attrib['track_name']
+            track['album'] = item.attrib['album_id']
+            track['preview'] = item.attrib['preview_url']
+            track['duration'] = item.attrib['duration']
+            track['artist'] = item.attrib['artist_id']
+            track['genres'] = item.attrib['genre_id']
+            tracks.append(track)
+        print(tracks)
         return album

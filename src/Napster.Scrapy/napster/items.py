@@ -33,10 +33,11 @@ class Album(scrapy.Item):
     songs = scrapy.Field()
 
 
-class Song(scrapy.Item):
+class Track(scrapy.Item):
     id = scrapy.Field()
     name = scrapy.Field()
     album = scrapy.Field()
     preview = scrapy.Field()
+    duration = scrapy.Field()
     artist = scrapy.Field()
     genres = scrapy.Field()
