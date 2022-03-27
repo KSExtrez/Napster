@@ -1,3 +1,4 @@
+import json
 import scrapy
 
 from napster.items import Artist
@@ -21,7 +22,7 @@ class ArtistSpider(scrapy.Spider):
         artist['id'] = metadata.attrib['meta_artist_id']
         artist['name'] = metadata.attrib['meta_artist_name']
         artist['img'] = response.css('.artist-image>img').attrib['src']
-        artist['genres'] = metadata.attrib['meta_genre_id']
+        artist['genres'] = json.loads(metadata.attrib['meta_genre_id'])
         artist['albums'] = response.css(
             'div.album-list>div::attr(album_id)').getall()
         return artist
