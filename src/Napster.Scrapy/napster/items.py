@@ -28,7 +28,7 @@ class Album(scrapy.Item):
     release_date = scrapy.Field()
     label = scrapy.Field()
     genres = scrapy.Field()
-    songs = scrapy.Field()
+    tracks = scrapy.Field()
 
 
 class Track(scrapy.Item):

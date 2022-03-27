@@ -1,3 +1,4 @@
+import json
 import scrapy
 
 from napster.items import Album, Track
@@ -16,11 +17,13 @@ class AlbumSpider(scrapy.Spider):
         album['id'] = metadata.attrib['meta_album_id']
         album['name'] = metadata.attrib['meta_album_name']
         album['artist'] = metadata.attrib['meta_artist_id']
-        album['genres'] = metadata.attrib['meta_genre_id']
+        album['genres'] = json.loads(metadata.attrib['meta_genre_id'])
         album['img'] = response.css('.hero-img>img').attrib['src']
-        album['release_date'] = response.css('#release-date>time::text').get()
-        album['label'] = response.css('#music-label::text').get()
-        album['songs'] = response.css(
+        album['release_date'] = response.css(
+            '#release-date>time::text').get().strip()
+        album['label'] = response.css(
+            '#music-label::text').get().replace('Label:', '').strip()
+        album['tracks'] = response.css(
             '.track-list>li::attr(track_id)').getall()
         tracks = []
         traks_li = response.css(
