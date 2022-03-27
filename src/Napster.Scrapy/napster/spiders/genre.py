@@ -8,10 +8,6 @@ class PruebaSpider(scrapy.Spider):
     allowed_domains = ['us.napster.com']
     start_urls = ['https://us.napster.com/genre/rock/lite-rock']
 
-    ITEM_PIPELINES = {
-        'napster.pipelines.CleanArtistPipeline': 100,
-    }
-
     def parse(self, response):
         genre = Genre()
         ids = response.css(

@@ -9,12 +9,6 @@ class ArtistSpider(scrapy.Spider):
     allowed_domains = ['us.napster.com']
     start_urls = ['https://us.napster.com/artist/billie-eilish']
 
-    custom_settings = {
-        'ITEM_PIPELINES': {
-            'napster.pipelines.NapsterPipeline': 100,
-        },
-    }
-
     def parse(self, response):
         artist = Artist()
         metadata = response.css('div.page-metadata')

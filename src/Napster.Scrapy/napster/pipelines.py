@@ -11,10 +11,3 @@ from itemadapter import ItemAdapter
 class NapsterPipeline:
     def process_item(self, item, spider):
         return item
-
-
-class CleanArtistPipeline:
-    def process_item(self, genre, spider):
-        artists = genre['artists']
-        genre['artists'] = list(map(lambda a: a.strip(), artists))
-        return genre
