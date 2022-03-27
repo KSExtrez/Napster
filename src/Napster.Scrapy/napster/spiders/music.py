@@ -11,7 +11,8 @@ class MusicSpider(CrawlSpider):
     start_urls = ['https://us.napster.com/music']
     custom_settings = {
         'ITEM_PIPELINES': {
-            'napster.pipelines.MongoPipeline': 100
+            'napster.pipelines.DuplicateItemsPipeline': 100,
+            'napster.pipelines.MongoPipeline': 200
         },
         'CLOSESPIDER_PAGECOUNT': 200
     }
@@ -82,8 +83,7 @@ class MusicSpider(CrawlSpider):
             '#release-date>time::text').get().strip()
         album['label'] = response.css(
             '#music-label::text').get().replace('Label:', '').strip()
-        # album['tracks'] = response.css(
-        #    '.track-list>li::attr(track_id)').getall()
+
         tracks = []
         traks_li = response.css(
             '.track-list>li')

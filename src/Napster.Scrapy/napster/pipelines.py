@@ -8,8 +8,9 @@
 import json
 import pymongo
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 
-from napster.items import Artist, Genre
+from napster.items import Album, Artist, Genre
 
 
 class NapsterPipeline:
@@ -20,7 +21,7 @@ class NapsterPipeline:
 class JsonWriterPipeline:
 
     def open_spider(self, spider):
-        self.file = open('items.jl', 'w')
+        self.file = open('napster.jl', 'w')
 
     def close_spider(self, spider):
         self.file.close()
@@ -31,11 +32,25 @@ class JsonWriterPipeline:
         return item
 
 
+class DuplicateItemsPipeline:
+
+    def __init__(self):
+        self.ids_seen = set()
+
+    def process_item(self, item, spider):
+        if item['id'] in self.ids_seen:
+            raise DropItem(f"Duplicate item found: {item['id']!r}")
+        else:
+            self.ids_seen.add(item['id'])
+            return item
+
+
 class MongoPipeline:
 
     genre_collection = 'genres'
     artist_collection = 'artists'
     album_collection = 'albums'
+    track_collection = 'tracks'
 
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -61,8 +76,11 @@ class MongoPipeline:
             collection = self.genre_collection
         elif isinstance(item, Artist):
             collection = self.artist_collection
-        else:
+        elif isinstance(item, Album):
             collection = self.album_collection
+            for i in item['tracks']:
+                self.db[self.track_collection].insert_one(
+                    ItemAdapter(i).asdict())
 
         self.db[collection].insert_one(ItemAdapter(item).asdict())
         return item
