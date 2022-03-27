@@ -22,7 +22,7 @@ class PruebaSpider(scrapy.Spider):
         genre['name'] = response.css(
             '#page-name::text').get().replace(' Music', '')
         genre['description'] = response.css(
-            'div.genre-banner-text').css('div.genre-blurb::text').get()
+            'div.genre-banner-text').css('div.genre-blurb::text').get().strip()
         if len(ids) > 1:
             genre['parent_genre'] = ids[-2]
         else:
