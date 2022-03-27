@@ -11,9 +11,11 @@ class MusicSpider(CrawlSpider):
     start_urls = ['https://us.napster.com/music']
     custom_settings = {
         'ITEM_PIPELINES': {
-            'napster.pipelines.MongoPipeline': 100,
+            'napster.pipelines.MongoPipeline': 100
         },
+        'CLOSESPIDER_PAGECOUNT': 200
     }
+
     rules = [
         Rule(
             LinkExtractor(allow=('genre/'), unique=True),
@@ -35,9 +37,6 @@ class MusicSpider(CrawlSpider):
             follow=True,
         ),
     ]
-    custom_settings = {
-        'CLOSESPIDER_PAGECOUNT': 100
-    }
 
     def parse_genre(self, response):
         genre = Genre()
@@ -85,8 +84,8 @@ class MusicSpider(CrawlSpider):
             '#release-date>time::text').get().strip()
         album['label'] = response.css(
             '#music-label::text').get().replace('Label:', '').strip()
-        album['tracks'] = response.css(
-            '.track-list>li::attr(track_id)').getall()
+        # album['tracks'] = response.css(
+        #    '.track-list>li::attr(track_id)').getall()
         tracks = []
         traks_li = response.css(
             '.track-list>li')
@@ -98,9 +97,12 @@ class MusicSpider(CrawlSpider):
             track['preview'] = item.attrib['preview_url']
             track['duration'] = item.attrib['duration']
             track['artist'] = item.attrib['artist_id']
-            track['genres'] = item.attrib['genre_id']
+            try:
+                track['genres'] = json.loads(item.attrib['genre_id'])
+            except ValueError:
+                track['genres'] = []
             tracks.append(track)
-        print(tracks)
+        album['tracks'] = tracks
         return album
 
     def parse_track(self, response):

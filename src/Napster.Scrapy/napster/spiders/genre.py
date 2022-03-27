@@ -7,6 +7,12 @@ class PruebaSpider(scrapy.Spider):
     name = 'prueba'
     allowed_domains = ['us.napster.com']
     start_urls = ['https://us.napster.com/genre/rock/lite-rock']
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            # 'napster.pipelines.JsonWriterPipeline': 100,
+            'napster.pipelines.MongoPipeline': 200
+        }
+    }
 
     def parse(self, response):
         genre = Genre()

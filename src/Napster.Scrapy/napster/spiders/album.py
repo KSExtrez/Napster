@@ -8,7 +8,7 @@ class AlbumSpider(scrapy.Spider):
     name = 'album'
     allowed_domains = ['us.napster.com']
     start_urls = [
-        'https://us.napster.com/artist/billie-eilish/album/when-we-all-fall-asleep-where-do-we-go']
+        'https://us.napster.com/artist/mc-lars/album/lars-attacks-horris-records-2018']
 
     def parse(self, response):
         album = Album()
@@ -23,8 +23,8 @@ class AlbumSpider(scrapy.Spider):
             '#release-date>time::text').get().strip()
         album['label'] = response.css(
             '#music-label::text').get().replace('Label:', '').strip()
-        album['tracks'] = response.css(
-            '.track-list>li::attr(track_id)').getall()
+        # album['tracks'] = response.css(
+        #    '.track-list>li::attr(track_id)').getall()
         tracks = []
         traks_li = response.css(
             '.track-list>li')
@@ -36,7 +36,12 @@ class AlbumSpider(scrapy.Spider):
             track['preview'] = item.attrib['preview_url']
             track['duration'] = item.attrib['duration']
             track['artist'] = item.attrib['artist_id']
-            track['genres'] = item.attrib['genre_id']
+
+            try:
+                track['genres'] = json.loads(item.attrib['genre_id'])
+            except ValueError as e:
+                track['genres'] = []
+
             tracks.append(track)
-        print(tracks)
+        album['tracks'] = tracks
         return album
