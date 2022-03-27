@@ -17,7 +17,6 @@ class Artist(scrapy.Item):
     name = scrapy.Field()
     img = scrapy.Field()
     genres = scrapy.Field()
-    albums = scrapy.Field()
 
 
 class Album(scrapy.Item):

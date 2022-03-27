@@ -17,6 +17,4 @@ class ArtistSpider(scrapy.Spider):
         artist['name'] = metadata.attrib['meta_artist_name']
         artist['img'] = response.css('.artist-image>img').attrib['src']
         artist['genres'] = json.loads(metadata.attrib['meta_genre_id'])
-        artist['albums'] = response.css(
-            'div.album-list>div::attr(album_id)').getall()
         return artist
