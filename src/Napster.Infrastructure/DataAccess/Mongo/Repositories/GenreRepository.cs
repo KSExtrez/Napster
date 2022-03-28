@@ -28,6 +28,11 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
             return await _context.Genres.Find(x => genreIds.Contains(x.GenreId)).ToListAsync();
         }
 
+        public async Task<Genre?> GetGenreByName(string name)
+        {
+            return await _context.Genres.Find(x => x.Name == name).FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Genre>> GetGenresByParentGenreId(string parentGenreId)
         {
             return await _context.Genres.Find(x => x.ParentGenreId == parentGenreId).ToListAsync();

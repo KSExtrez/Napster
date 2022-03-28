@@ -10,6 +10,13 @@
         Task<Artist?> GetArtistById(string artistId);
 
         /// <summary>
+        /// Gets an artist by name.
+        /// </summary>
+        /// <param name="name">An artist name.</param>
+        /// <returns>An artist.</returns>
+        Task<Artist?> GetArtistByName(string name);
+
+        /// <summary>
         /// Get all artist.
         /// </summary>
         /// <returns>A collection of artists.</returns>

@@ -10,6 +10,13 @@
         Task<Genre?> GetGenreById(string genreId);
 
         /// <summary>
+        /// Gets an genre by name.
+        /// </summary>
+        /// <param name="name">An genre name.</param>
+        /// <returns>An artist.</returns>
+        Task<Genre?> GetGenreByName(string name);
+
+        /// <summary>
         /// Gets a collection of genre by ids.
         /// </summary>
         /// <param name="genreIds">A collection of genre ids.</param>

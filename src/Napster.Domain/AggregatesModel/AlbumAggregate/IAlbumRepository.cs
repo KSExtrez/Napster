@@ -10,11 +10,25 @@
         Task<Album?> GetAlbumById(string albumId);
 
         /// <summary>
+        /// Gets an album by name.
+        /// </summary>
+        /// <param name="name">Album name.</param>
+        /// <returns>An album</returns>
+        Task<Album?> GetAlbumByName(string name);
+
+        /// <summary>
         /// Gets an album by track.
         /// </summary>
         /// <param name="id">Track unique id.</param>
         /// <returns>An album</returns>
         Task<Album?> GetAlbumByTrackId(string trackId);
+
+        /// <summary>
+        /// Gets an album by track name.
+        /// </summary>
+        /// <param name="name">Track name.</param>
+        /// <returns>An album</returns>
+        Task<Album?> GetAlbumByTrackName(string name);
 
         /// <summary>
         /// Gets all albums.
@@ -42,6 +56,13 @@
         /// <param name="id">Track unique id.</param>
         /// <returns>A track.</returns>
         Task<Track?> GetTrackById(string trackId);
+
+        /// <summary>
+        /// Gets a track by name.
+        /// </summary>
+        /// <param name="name">Track name.</param>
+        /// <returns>A track.</returns>
+        Task<Track?> GetTrackByName(string name);
 
         /// <summary>
         /// Get all tracks.
