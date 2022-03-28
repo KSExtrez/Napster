@@ -14,7 +14,7 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
 
         public async Task<Album?> GetAlbumById(string id)
         {
-            return await _context.Albums.Find(x => x.Id == id).FirstOrDefaultAsync();
+            return await _context.Albums.Find(x => x.AlbumId == id).FirstOrDefaultAsync();
         }
 
         public async Task<Album?> GetAlbumByTrackId(string id)
@@ -29,8 +29,7 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
 
         public async Task<IEnumerable<Album>> GetAllAlbums()
         {
-            var filter = Builders<Album>.Filter.Empty;
-            return await _context.Albums.Find(filter).ToListAsync();
+            return await _context.Albums.Find(_ => true).ToListAsync();
         }
 
         public async Task<IEnumerable<Track>> GetAllTracks()
@@ -48,7 +47,7 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
         public async Task<Track?> GetTrackById(string id)
         {
             var album = await GetAlbumByTrackId(id);
-            return album?.Tracks.First(x => x.Id == id);
+            return album?.Tracks.First(x => x.TrackId == id);
         }
     }
 }

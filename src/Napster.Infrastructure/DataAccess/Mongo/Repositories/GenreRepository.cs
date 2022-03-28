@@ -14,17 +14,17 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
 
         public async Task<IEnumerable<Genre>> GetAllGenres()
         {
-            return await _context.Genres.Find(x => true).ToListAsync();
+            return await _context.Genres.Find(_ => true).ToListAsync();
         }
 
         public async Task<Genre?> GetGenreById(string genreId)
         {
-            return await _context.Genres.Find(x => x.Id == genreId).FirstOrDefaultAsync();
+            return await _context.Genres.Find(x => x.GenreId == genreId).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Genre>> GetGenresByParentGenreId(string parentGenreId)
         {
-            return await _context.Genres.Find(x => x.Id == parentGenreId).ToListAsync();
+            return await _context.Genres.Find(x => x.GenreId == parentGenreId).ToListAsync();
         }
     }
 }

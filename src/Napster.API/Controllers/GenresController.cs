@@ -13,11 +13,30 @@ namespace Napster.API.Controllers
             _genreRepository = genreRepository;
         }
 
-        [HttpGet(Name = "GetGenres")]
+        [HttpGet]
         public async Task<IActionResult> GetAllGenres()
         {
             var genres = await _genreRepository.GetAllGenres();
+            return Ok(genres);
+        }
 
+        [HttpGet("{genreId}")]
+        public async Task<IActionResult> GetGenreById(string genreId)
+        {
+            var genre = await _genreRepository.GetGenreById(genreId);
+
+            if (genre is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(genre);
+        }
+
+        [HttpGet("{parentId}/sub-genre")]
+        public async Task<IActionResult> GetGenresByParentId(string parentId)
+        {
+            var genres = await _genreRepository.GetGenresByParentGenreId(parentId);
             return Ok(genres);
         }
     }

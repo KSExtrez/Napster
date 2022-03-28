@@ -14,12 +14,12 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
 
         public async Task<IEnumerable<Artist>> GetAllArtists()
         {
-            return await _context.Artists.Find(x => true).ToListAsync();
+            return await _context.Artists.Find(_ => true).ToListAsync();
         }
 
         public async Task<Artist?> GetArtistById(string artistId)
         {
-            return await _context.Artists.Find(x => x.Id == artistId).FirstOrDefaultAsync();
+            return await _context.Artists.Find(x => x.ArtistId == artistId).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Artist>> GetArtistsByGenreId(string genreId)
