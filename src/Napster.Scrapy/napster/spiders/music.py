@@ -12,9 +12,9 @@ class MusicSpider(CrawlSpider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'napster.pipelines.DuplicateItemsPipeline': 100,
-            'napster.pipelines.MongoPipeline': 200
+            'napster.pipelines.CleanDataPipeline': 200,
+            'napster.pipelines.MongoPipeline': 300
         },
-        'CLOSESPIDER_PAGECOUNT': 200
     }
 
     rules = [
@@ -47,41 +47,43 @@ class MusicSpider(CrawlSpider):
         ids = json.loads(ids)
 
         # gets the last id (current genre id)
-        genre['id'] = ids[-1]
+        genre['Id'] = ids[-1]
 
         # gets the last name (current name)
-        genre['name'] = response.css(
+        genre['Name'] = response.css(
             '#page-name::text').get().replace(' Music', '')
-        genre['description'] = response.css(
-            'div.genre-banner-text').css('div.genre-blurb::text').get().strip()
+        genre['Description'] = response.css(
+            'div.genre-banner-text').css('div.genre-blurb::text').get()
         if len(ids) > 1:
-            genre['parent_genre'] = ids[-2]
+            genre['ParentGenreId'] = ids[-2]
         else:
-            genre['parent_genre'] = 'g.0'
+            genre['ParentGenreId'] = 'g.0'
         return genre
 
     def parse_artist(self, response):
         artist = Artist()
         metadata = response.css('div.page-metadata')
 
-        artist['id'] = metadata.attrib['meta_artist_id']
-        artist['name'] = metadata.attrib['meta_artist_name']
-        artist['img'] = response.css('.artist-image>img').attrib['src']
-        artist['genres'] = json.loads(metadata.attrib['meta_genre_id'])
+        artist['Id'] = metadata.attrib['meta_artist_id']
+        artist['Name'] = metadata.attrib['meta_artist_name']
+        artist['Description'] = response.css(
+            '.artist-bio.hero-blurb::text').get()
+        artist['Img'] = response.css('.artist-image>img').attrib['src']
+        artist['GenreIds'] = json.loads(metadata.attrib['meta_genre_id'])
         return artist
 
     def parse_album(self, response):
         album = Album()
         metadata = response.css('div.page-metadata')
 
-        album['id'] = metadata.attrib['meta_album_id']
-        album['name'] = metadata.attrib['meta_album_name']
-        album['artist'] = metadata.attrib['meta_artist_id']
-        album['genres'] = json.loads(metadata.attrib['meta_genre_id'])
-        album['img'] = response.css('.hero-img>img').attrib['src']
-        album['release_date'] = response.css(
+        album['Id'] = metadata.attrib['meta_album_id']
+        album['Name'] = metadata.attrib['meta_album_name']
+        album['ArtistId'] = metadata.attrib['meta_artist_id']
+        album['GenreIds'] = json.loads(metadata.attrib['meta_genre_id'])
+        album['Img'] = response.css('.hero-img>img').attrib['src']
+        album['ReleaseDate'] = response.css(
             '#release-date>time::text').get().strip()
-        album['label'] = response.css(
+        album['Label'] = response.css(
             '#music-label::text').get().replace('Label:', '').strip()
 
         tracks = []
@@ -89,18 +91,18 @@ class MusicSpider(CrawlSpider):
             '.track-list>li')
         for item in traks_li:
             track = Track()
-            track['id'] = item.attrib['track_id']
-            track['name'] = item.attrib['track_name']
-            track['album'] = item.attrib['album_id']
-            track['preview'] = item.attrib['preview_url']
-            track['duration'] = item.attrib['duration']
-            track['artist'] = item.attrib['artist_id']
+            track['Id'] = item.attrib['track_id']
+            track['Name'] = item.attrib['track_name']
+            track['AlbumId'] = item.attrib['album_id']
+            track['Preview'] = item.attrib['preview_url']
+            track['Duration'] = item.attrib['duration']
+            track['ArtistId'] = item.attrib['artist_id']
             try:
-                track['genres'] = json.loads(item.attrib['genre_id'])
+                track['GenreIds'] = json.loads(item.attrib['genre_id'])
             except ValueError:
-                track['genres'] = []
+                track['GenreIds'] = []
             tracks.append(track)
-        album['tracks'] = tracks
+        album['Tracks'] = tracks
         return album
 
     def parse_track(self, response):

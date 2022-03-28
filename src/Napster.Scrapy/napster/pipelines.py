@@ -5,6 +5,7 @@
 
 
 # useful for handling different item types with a single interface
+from datetime import datetime
 import json
 import pymongo
 from itemadapter import ItemAdapter
@@ -38,19 +39,18 @@ class DuplicateItemsPipeline:
         self.ids_seen = set()
 
     def process_item(self, item, spider):
-        if item['id'] in self.ids_seen:
-            raise DropItem(f"Duplicate item found: {item['id']!r}")
+        if item['Id'] in self.ids_seen:
+            raise DropItem(f"Duplicate item found: {item['Id']!r}")
         else:
-            self.ids_seen.add(item['id'])
+            self.ids_seen.add(item['Id'])
             return item
 
 
 class MongoPipeline:
 
-    genre_collection = 'genres'
-    artist_collection = 'artists'
-    album_collection = 'albums'
-    track_collection = 'tracks'
+    genre_collection = 'Genres'
+    artist_collection = 'Artists'
+    album_collection = 'Albums'
 
     def __init__(self, mongo_uri, mongo_db):
         self.mongo_uri = mongo_uri
@@ -78,9 +78,23 @@ class MongoPipeline:
             collection = self.artist_collection
         elif isinstance(item, Album):
             collection = self.album_collection
-            for i in item['tracks']:
-                self.db[self.track_collection].insert_one(
-                    ItemAdapter(i).asdict())
 
         self.db[collection].insert_one(ItemAdapter(item).asdict())
+        return item
+
+
+class CleanDataPipeline:
+
+    def process_item(self, item, spider):
+        if isinstance(item, Album):
+            item['ReleaseDate'] = datetime.strptime(
+                item['ReleaseDate'], '%b %Y')
+        elif isinstance(item, Artist):
+            item['Id'] = item['Id'].lower()
+            if item['Description']:
+                item['Description'] = item['Description'].strip()
+        elif isinstance(item, Genre):
+            if item['Description']:
+                item['Description'] = item['Description'].strip()
+
         return item

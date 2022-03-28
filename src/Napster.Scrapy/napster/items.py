@@ -6,35 +6,37 @@ import scrapy
 
 
 class Genre(scrapy.Item):
-    id = scrapy.Field()
-    name = scrapy.Field()
-    description = scrapy.Field()
-    parent_genre = scrapy.Field()
+    Id = scrapy.Field()
+    Name = scrapy.Field()
+    Description = scrapy.Field()
+    ParentGenreId = scrapy.Field()
 
 
 class Artist(scrapy.Item):
-    id = scrapy.Field()
-    name = scrapy.Field()
-    img = scrapy.Field()
-    genres = scrapy.Field()
+    Id = scrapy.Field()
+    Name = scrapy.Field()
+    Description = scrapy.Field()
+    Img = scrapy.Field()
+    GenreIds = scrapy.Field()
 
 
 class Album(scrapy.Item):
-    id = scrapy.Field()
-    name = scrapy.Field()
-    artist = scrapy.Field()
-    img = scrapy.Field()
-    release_date = scrapy.Field()
-    label = scrapy.Field()
-    genres = scrapy.Field()
-    tracks = scrapy.Field()
+    Id = scrapy.Field()
+    Name = scrapy.Field()
+    ArtistId = scrapy.Field()
+    Img = scrapy.Field()
+    ReleaseDate = scrapy.Field()
+    Label = scrapy.Field()
+    GenreIds = scrapy.Field()
+    Tracks = scrapy.Field()
+    trackDetails = []
 
 
 class Track(scrapy.Item):
-    id = scrapy.Field()
-    name = scrapy.Field()
-    album = scrapy.Field()
-    preview = scrapy.Field()
-    duration = scrapy.Field()
-    artist = scrapy.Field()
-    genres = scrapy.Field()
+    Id = scrapy.Field()
+    Name = scrapy.Field()
+    AlbumId = scrapy.Field()
+    Preview = scrapy.Field()
+    Duration = scrapy.Field()
+    ArtistId = scrapy.Field()
+    GenreIds = scrapy.Field()
