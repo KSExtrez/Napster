@@ -11,6 +11,11 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         public AlbumInfo AlbumInfo { get; init; }
 
         /// <summary>
+        /// Gets an artist parent id.
+        /// </summary>
+        public string ArtistId { get; init; }
+
+        /// <summary>
         /// Gets an Album tracks.
         /// </summary>
         public IReadOnlyList<Track> Tracks { get; init; }
@@ -30,10 +35,11 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// <param name="label">Album label.</param>
         /// <param name="tracks">Album tracks.</param>
         /// <param name="genres">Album related genres.</param>
-        public Album(string id, string name, AlbumInfo albumInfo, List<Track> tracks, List<string> genreIds)
+        public Album(string id, string name, AlbumInfo albumInfo, string artistId, List<Track> tracks, List<string> genreIds)
             : base(id, name)
         {
             AlbumInfo = albumInfo;
+            ArtistId = artistId;
             Tracks = tracks;
             GenreIds = genreIds;
         }
