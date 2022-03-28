@@ -15,8 +15,8 @@ namespace Napster.CLI
     [Subcommand(typeof(TrackCommand))]
     public class Application
     {
-        public const string Description = "This tool is a command line interface allowing " +
-                                          "manage Napster scraped data.";
+        public const string Description = "Napster CLI(command line interface) permite " +
+                                          "administrar los datos extraidos de Napster.";
 
         public void OnExecute(CommandLineApplication app)
         {

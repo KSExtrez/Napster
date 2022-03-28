@@ -1,16 +1,50 @@
 # Napster
 
-# UI (Consola)
+## UI (Consola)
+Consulta de datos por medio de CLI en formato `Entidad` `Filtro'
 
-## Aprovisionar Datos
-
+### Consulta de generos y subgeneros
 ```sh
-$> ./napster-cli init
+$> ./napster-cli genre all
 ```
 
-Aprovisionar desde una carga anterior
+### Consulta de artistas por genero
 ```sh
-$> ./napster-cli database init load
+$> ./napster-cli artist genre_name
+```
+
+```sh
+$> ./napster-cli artist genre_id
+```
+
+### Consulta de albumes por artista
+
+```sh
+$> ./napster-cli album artist_id
+```
+
+```sh
+$> ./napster-cli album artist_name
+```
+
+### Consulta de canciones por album
+
+```sh
+$> ./napster-cli track album_id
+```
+
+```sh
+$> ./napster-cli track album_name
+```
+
+### Consulta de artista por cancion
+
+```sh
+$> ./napster-cli artist track_id
+```
+
+```sh
+$> ./napster-cli artist track_name
 ```
 
 # API

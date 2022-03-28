@@ -2,29 +2,29 @@
 using Napster.Domain.AggregatesModel.AlbumAggregate;
 using System.Text.Json;
 
-namespace Napster.CLI.Commands.Albums
+namespace Napster.CLI.Commands.Tracks
 {
-    [Command("name", Description = "Obtiene el album por nombre")]
-    public class AlbumByName
+    [Command("album_id", Description = "Obtiene la cancion por id del album")]
+    internal class TracksByAlbumId
     {
         private readonly IAlbumRepository _albumRepository;
 
-        public AlbumByName(IAlbumRepository albumRepository)
+        public TracksByAlbumId(IAlbumRepository albumRepository)
         {
             _albumRepository = albumRepository;
         }
 
         public void OnExecute(CommandLineApplication app)
         {
-            Console.Write("Ingresa el nombre del album: ");
+            Console.Write("Ingresa el id del album: ");
             string value = Console.ReadLine() ?? "";
-            var album = _albumRepository.GetAlbumByName(value).Result;
+            var album = _albumRepository.GetAlbumById(value).Result;
             if (album == null)
             {
                 Console.WriteLine($"No se encontro el album: {value}");
                 return;
             }
-            string jsonString = JsonSerializer.Serialize(album);
+            string jsonString = JsonSerializer.Serialize(album.Tracks);
             Console.WriteLine(jsonString);
         }
     }
