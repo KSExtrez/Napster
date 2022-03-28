@@ -9,7 +9,7 @@ namespace Napster.Domain.AggregatesModel.GenreAggregate
         /// Gets a genre description.
         /// </summary>
         [BsonElement("Id")]
-        public string? GenreId { get; init; }
+        public string GenreId { get; init; }
 
         /// <summary>
         /// Gets a genre description.

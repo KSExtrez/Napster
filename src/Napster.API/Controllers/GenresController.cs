@@ -5,7 +5,7 @@ using Napster.Domain.AggregatesModel.GenreAggregate;
 
 namespace Napster.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/genres")]
     [ApiController]
     public class GenresController : ControllerBase
     {
@@ -44,6 +44,12 @@ namespace Napster.API.Controllers
         public async Task<IActionResult> GetGenresByParentId(string genreId)
         {
             var genres = await _genreRepository.GetGenresByParentGenreId(genreId);
+
+            if (genres.Count() == 0)
+            {
+                return NotFound();
+            }
+
             return Ok(genres);
         }
 
@@ -51,6 +57,12 @@ namespace Napster.API.Controllers
         public async Task<IActionResult> GetArtistsByParentId(string genreId)
         {
             var artists = await _artistRepository.GetArtistsByGenreId(genreId);
+
+            if (artists.Count() == 0)
+            {
+                return NotFound();
+            }
+
             return Ok(artists);
         }
 
@@ -58,6 +70,12 @@ namespace Napster.API.Controllers
         public async Task<IActionResult> GetAlbumsByParentId(string genreId)
         {
             var albums = await _albumRepository.GetAlbumsByGenreId(genreId);
+
+            if (albums.Count() == 0)
+            {
+                return NotFound();
+            }
+
             return Ok(albums);
         }
     }

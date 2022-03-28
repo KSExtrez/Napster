@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using Napster.Domain.SeedWork;
+using System.Text.Json.Serialization;
 
 namespace Napster.Domain.AggregatesModel.AlbumAggregate
 {
@@ -9,7 +10,7 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// Gets a genre description.
         /// </summary>
         [BsonElement("Id")]
-        public string? AlbumId { get; init; }
+        public string AlbumId { get; init; }
 
         /// <summary>
         /// Gets an Album iamge url.
@@ -35,6 +36,7 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// <summary>
         /// Gets an Album tracks.
         /// </summary>
+        [JsonIgnore]
         public IReadOnlyList<Track> Tracks { get; init; }
 
         /// <summary>

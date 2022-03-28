@@ -9,7 +9,7 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// Gets a genre description.
         /// </summary>
         [BsonElement("Id")]
-        public string? TrackId { get; init; }
+        public string TrackId { get; init; }
 
         /// <summary>
         /// Gets parent album id.

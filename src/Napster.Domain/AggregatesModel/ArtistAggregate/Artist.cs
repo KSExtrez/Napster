@@ -9,13 +9,18 @@ namespace Napster.Domain.AggregatesModel.ArtistAggregate
         /// Gets a genre description.
         /// </summary>
         [BsonElement("Id")]
-        public string? ArtistId { get; init; }
+        public string ArtistId { get; init; }
 
         /// <summary>
         /// Gets an artist image url.
         /// </summary>
         [BsonElement("Img")]
         public Uri ImgUrl { get; init; }
+
+        /// <summary>
+        /// Gets an artist description.
+        /// </summary>
+        public string Description { get; init; }
 
         /// <summary>
         /// Gets an artist related genres ids.
@@ -29,11 +34,12 @@ namespace Napster.Domain.AggregatesModel.ArtistAggregate
         /// <param name="name">Artist name.</param>
         /// <param name="imgUrl">Artist image url.</param>
         /// <param name="genres">Artist genres.</param>
-        public Artist(string id, string artistId, string name, Uri imgUrl, IEnumerable<string> genreIds)
+        public Artist(string id, string artistId, string name, Uri imgUrl, string description, IEnumerable<string> genreIds)
             : base(id, name)
         {
             ArtistId = artistId;
             ImgUrl = imgUrl;
+            Description = description;
             GenreIds = genreIds;
         }
     }

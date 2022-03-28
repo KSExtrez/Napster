@@ -10,6 +10,13 @@
         Task<Genre?> GetGenreById(string genreId);
 
         /// <summary>
+        /// Gets a collection of genre by ids.
+        /// </summary>
+        /// <param name="genreIds">A collection of genre ids.</param>
+        /// <returns>An artist.</returns>
+        Task<IEnumerable<Genre>> GetGenreByIds(IEnumerable<string> genreIds);
+
+        /// <summary>
         /// Get all genres.
         /// </summary>
         /// <returns>A collection of genres.</returns>
