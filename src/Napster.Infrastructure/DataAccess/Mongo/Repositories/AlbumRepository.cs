@@ -12,19 +12,24 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
             _context = context;
         }
 
-        public async Task<Album?> GetAlbumById(string id)
+        public async Task<Album?> GetAlbumById(string albumId)
         {
-            return await _context.Albums.Find(x => x.AlbumId == id).FirstOrDefaultAsync();
+            return await _context.Albums.Find(x => x.AlbumId == albumId).FirstOrDefaultAsync();
         }
 
-        public async Task<Album?> GetAlbumByTrackId(string id)
+        public async Task<Album?> GetAlbumByTrackId(string trackId)
         {
-            return await _context.Albums.Find(x => x.Tracks.Any(x => x.AlbumId == id)).FirstOrDefaultAsync();
+            return await _context.Albums.Find(x => x.Tracks.Any(x => x.AlbumId == trackId)).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<Album>> GetAlbumsByArtistId(string id)
+        public async Task<IEnumerable<Album>> GetAlbumsByArtistId(string artistId)
         {
-            return await _context.Albums.Find(x => x.ArtistId == id).ToListAsync();
+            return await _context.Albums.Find(x => x.ArtistId == artistId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Album>> GetAlbumsByGenreId(string genreId)
+        {
+            return await _context.Albums.Find(x => x.GenreIds.Contains(genreId)).ToListAsync();
         }
 
         public async Task<IEnumerable<Album>> GetAllAlbums()
@@ -44,10 +49,10 @@ namespace Napster.Infrastructure.DataAccess.Mongo.Repositories
             return albums.SelectMany(x => x.Tracks);
         }
 
-        public async Task<Track?> GetTrackById(string id)
+        public async Task<Track?> GetTrackById(string trackId)
         {
-            var album = await GetAlbumByTrackId(id);
-            return album?.Tracks.First(x => x.TrackId == id);
+            var album = await GetAlbumByTrackId(trackId);
+            return album?.Tracks.First(x => x.TrackId == trackId);
         }
     }
 }

@@ -7,14 +7,14 @@
         /// </summary>
         /// <param name="id">Album unique id.</param>
         /// <returns>An album</returns>
-        Task<Album?> GetAlbumById(string id);
+        Task<Album?> GetAlbumById(string albumId);
 
         /// <summary>
         /// Gets an album by track.
         /// </summary>
         /// <param name="id">Track unique id.</param>
         /// <returns>An album</returns>
-        Task<Album?> GetAlbumByTrackId(string id);
+        Task<Album?> GetAlbumByTrackId(string trackId);
 
         /// <summary>
         /// Gets all albums.
@@ -23,18 +23,25 @@
         Task<IEnumerable<Album>> GetAllAlbums();
 
         /// <summary>
-        /// Gets an album by id.
+        /// Gets an album by artist id.
         /// </summary>
-        /// <param name="id">Album unique id.</param>
+        /// <param name="id">Artist id.</param>
         /// <returns>A collection of albums.</returns>
-        Task<IEnumerable<Album>> GetAlbumsByArtistId(string id);
+        Task<IEnumerable<Album>> GetAlbumsByArtistId(string artistId);
+
+        /// <summary>
+        /// Gets an album by genre id.
+        /// </summary>
+        /// <param name="id">Genre id.</param>
+        /// <returns>A collection of albums.</returns>
+        Task<IEnumerable<Album>> GetAlbumsByGenreId(string genreId);
 
         /// <summary>
         /// Gets a track by id.
         /// </summary>
         /// <param name="id">Track unique id.</param>
         /// <returns>A track.</returns>
-        Task<Track?> GetTrackById(string id);
+        Task<Track?> GetTrackById(string trackId);
 
         /// <summary>
         /// Get all tracks.

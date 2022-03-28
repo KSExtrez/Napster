@@ -14,6 +14,7 @@ namespace Napster.Domain.AggregatesModel.ArtistAggregate
         /// <summary>
         /// Gets an artist image url.
         /// </summary>
+        [BsonElement("Img")]
         public Uri ImgUrl { get; init; }
 
         /// <summary>

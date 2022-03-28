@@ -1,5 +1,4 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
 using Napster.Domain.SeedWork;
 
 namespace Napster.Domain.AggregatesModel.AlbumAggregate
@@ -18,14 +17,24 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         public string AlbumId { get; init; }
 
         /// <summary>
-        /// Gets a track information.
+        /// Gets a preview url.
         /// </summary>
-        public TrackInfo TrackInfo { get; init; }
+        public Uri Preview { get; init; }
+
+        /// <summary>
+        /// Gets track duration.
+        /// </summary>
+        public uint Duration { get; init; }
 
         /// <summary>
         /// Gets a parent artist.
         /// </summary>
         public string ArtistId { get; init; }
+
+        /// <summary>
+        /// Gets an track related genres ids.
+        /// </summary>
+        public IEnumerable<string> GenreIds { get; init; }
 
         /// <summary>
         /// Creates a new <see cref="Track"/> instance.
@@ -36,13 +45,15 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// <param name="preview">Track preview.</param>
         /// <param name="duration">Track duration.</param>
         /// <param name="artist">Track parent artist.</param>
-        public Track(string id, string trackId, string name, string albumId, TrackInfo trackInfo, string artistId)
+        public Track(string id, string trackId, string name, string albumId, Uri preview, uint duration, string artistId, IEnumerable<string> genreIds)
             : base(id, name)
         {
             TrackId = trackId;
             AlbumId = albumId;
-            TrackInfo = trackInfo;
+            Preview = preview;
+            Duration = duration;
             ArtistId = artistId;
+            GenreIds = genreIds;
         }
     }
 }

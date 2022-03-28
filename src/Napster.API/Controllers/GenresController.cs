@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Napster.Domain.AggregatesModel.AlbumAggregate;
+using Napster.Domain.AggregatesModel.ArtistAggregate;
 using Napster.Domain.AggregatesModel.GenreAggregate;
 
 namespace Napster.API.Controllers
@@ -8,9 +10,14 @@ namespace Napster.API.Controllers
     public class GenresController : ControllerBase
     {
         private readonly IGenreRepository _genreRepository;
-        public GenresController(IGenreRepository genreRepository)
+        private readonly IArtistRepository _artistRepository;
+        private readonly IAlbumRepository _albumRepository;
+
+        public GenresController(IGenreRepository genreRepository, IArtistRepository artistRepository, IAlbumRepository albumRepository)
         {
             _genreRepository = genreRepository;
+            _artistRepository = artistRepository;
+            _albumRepository = albumRepository;
         }
 
         [HttpGet]
@@ -33,11 +40,25 @@ namespace Napster.API.Controllers
             return Ok(genre);
         }
 
-        [HttpGet("{parentId}/sub-genre")]
-        public async Task<IActionResult> GetGenresByParentId(string parentId)
+        [HttpGet("{genreId}/sub-genres")]
+        public async Task<IActionResult> GetGenresByParentId(string genreId)
         {
-            var genres = await _genreRepository.GetGenresByParentGenreId(parentId);
+            var genres = await _genreRepository.GetGenresByParentGenreId(genreId);
             return Ok(genres);
+        }
+
+        [HttpGet("{genreId}/artists")]
+        public async Task<IActionResult> GetArtistsByParentId(string genreId)
+        {
+            var artists = await _artistRepository.GetArtistsByGenreId(genreId);
+            return Ok(artists);
+        }
+
+        [HttpGet("{genreId}/albums")]
+        public async Task<IActionResult> GetAlbumsByParentId(string genreId)
+        {
+            var albums = await _albumRepository.GetAlbumsByGenreId(genreId);
+            return Ok(albums);
         }
     }
 }

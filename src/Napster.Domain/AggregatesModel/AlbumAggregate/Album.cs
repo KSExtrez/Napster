@@ -1,5 +1,4 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
 using Napster.Domain.SeedWork;
 
 namespace Napster.Domain.AggregatesModel.AlbumAggregate
@@ -13,9 +12,20 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         public string? AlbumId { get; init; }
 
         /// <summary>
-        /// Gets an album information.
+        /// Gets an Album iamge url.
         /// </summary>
-        public AlbumInfo AlbumInfo { get; init; }
+        [BsonElement("Img")]
+        public Uri ImgUrl { get; init; }
+
+        /// <summary>
+        /// Gets an Album release date.
+        /// </summary>
+        public DateTime ReleaseDate { get; init; }
+
+        /// <summary>
+        /// Gets an Album label.
+        /// </summary>
+        public string Label { get; init; }
 
         /// <summary>
         /// Gets an artist parent id.
@@ -42,11 +52,13 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// <param name="label">Album label.</param>
         /// <param name="tracks">Album tracks.</param>
         /// <param name="genres">Album related genres.</param>
-        public Album(string id, string albumId, string name, AlbumInfo albumInfo, string artistId, List<Track> tracks, List<string> genreIds)
+        public Album(string id, string albumId, string name, Uri imgUrl, DateTime releaseDate, string label, string artistId, List<Track> tracks, List<string> genreIds)
             : base(id, name)
         {
             AlbumId = albumId;
-            AlbumInfo = albumInfo;
+            ImgUrl = imgUrl;
+            ReleaseDate = releaseDate;
+            Label = label;
             ArtistId = artistId;
             Tracks = tracks;
             GenreIds = genreIds;

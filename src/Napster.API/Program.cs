@@ -1,3 +1,5 @@
+using Napster.Domain.AggregatesModel.AlbumAggregate;
+using Napster.Domain.AggregatesModel.ArtistAggregate;
 using Napster.Domain.AggregatesModel.GenreAggregate;
 using Napster.Infrastructure.DataAccess.Mongo;
 using Napster.Infrastructure.DataAccess.Mongo.Repositories;
@@ -15,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<NapsterSettings>(builder.Configuration.GetSection("NapsterDatabase"));
 builder.Services.AddSingleton<NapsterContext>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 
 var app = builder.Build();
 
