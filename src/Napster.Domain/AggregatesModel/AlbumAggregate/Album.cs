@@ -1,10 +1,17 @@
-﻿using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using Napster.Domain.AggregatesModel.AlbumAggregate.ValueObjects;
 using Napster.Domain.SeedWork;
 
 namespace Napster.Domain.AggregatesModel.AlbumAggregate
 {
     public sealed class Album : Entity
     {
+        /// <summary>
+        /// Gets a genre description.
+        /// </summary>
+        [BsonElement("Id")]
+        public string? AlbumId { get; init; }
+
         /// <summary>
         /// Gets an album information.
         /// </summary>
@@ -35,9 +42,10 @@ namespace Napster.Domain.AggregatesModel.AlbumAggregate
         /// <param name="label">Album label.</param>
         /// <param name="tracks">Album tracks.</param>
         /// <param name="genres">Album related genres.</param>
-        public Album(string id, string name, AlbumInfo albumInfo, string artistId, List<Track> tracks, List<string> genreIds)
+        public Album(string id, string albumId, string name, AlbumInfo albumInfo, string artistId, List<Track> tracks, List<string> genreIds)
             : base(id, name)
         {
+            AlbumId = albumId;
             AlbumInfo = albumInfo;
             ArtistId = artistId;
             Tracks = tracks;

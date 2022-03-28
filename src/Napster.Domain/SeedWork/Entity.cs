@@ -1,10 +1,15 @@
-﻿namespace Napster.Domain.SeedWork
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace Napster.Domain.SeedWork
 {
     public class Entity
     {
         /// <summary>
         /// Gets an entity unique id.
         /// </summary>
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; init; }
 
         /// <summary>
